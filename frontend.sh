@@ -14,7 +14,7 @@ unzip /tmp/frontend.zip >/tmp/roboshop.log &>>/tmp/roboshop.log
 
 
 echo -e "\e[33mUpdate  frontend  configuration\e[0m"
-cp /root/roboshop-shell/roboshop.confi /etc/nginx/default.d/roboshop.confi
+cp /root/roboshop-shell/roboshop.confi  /etc/nginx/default.d/roboshop.confi
 
 
 echo -e "\e[33mStarting Nginx Server\e[0m"

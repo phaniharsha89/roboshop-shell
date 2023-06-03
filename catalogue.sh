@@ -33,7 +33,7 @@ systemctl start catalogue &>>/tmp/roboshop.log
 
 
 echo -e "\e[33mCopy MongoDB Repo file \e[0m"
-cp /root/roboshop-shell/mongodb.repo /etc/yum.repos.d/mongo.repo &>>/tmp/roboshop.log
+cp /root/roboshop-shell/mongodb.repo /etc/yum.repos.d/mongodb.repo &>>/tmp/roboshop.log
 
 
 echo -e "\e[33m Install MongoDB Client\e[0m"
