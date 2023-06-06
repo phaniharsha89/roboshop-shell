@@ -1,3 +1,4 @@
+ 
 echo -e "\e[33m Configuring NodeJS Repos \e[0m"
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>/tmp/roboshop.log
 
