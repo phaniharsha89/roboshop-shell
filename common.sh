@@ -1,6 +1,6 @@
 color="\e[32m"
-nocolor="\e[0m"
-log_file="/tmp/roboshop.log"
+nocolor="${nocolor}"
+log_file="$log_file"
 app_path="/app"  
 
 
@@ -100,4 +100,20 @@ mysql_schema_setup
 
 
 systemd_setup 
+}
+
+python() {
+
+echo -e "${color} Install Python ${nocolor}"
+yum install python36 gcc python3-devel -y &>>$log_file
+
+app_presetup
+
+
+echo -e "${color} Download application Dependencies ${nocolor}"
+cd /app 
+pip3.6 install -r requirements.txt &>>$log_file
+
+systemd_setup
+
 }
