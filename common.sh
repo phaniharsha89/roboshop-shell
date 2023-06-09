@@ -3,15 +3,10 @@ nocolor="\e[0m"
 log_file="/tmp/roboshop.log"
 app_path="/app"  
 
-nodejs () { 
 
- echo -e "${color} Configuring NodeJS Repos ${nocolor}"
- curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>$log_file
-
- echo -e "${color} Install NodeJS ${nocolor}"
- yum install nodejs -y &>>$log_file
-
- echo -e "${color} Add Application User ${nocolor}"
+app_presetup () {
+   
+   echo -e "${color} Add Application User ${nocolor}"
  useradd roboshop &>>$log_file
 
  echo -e "${color} Create Application Directory ${nocolor}"
@@ -23,11 +18,12 @@ nodejs () {
  cd ${app_path} 
 
  echo -e "${color} Extract Application Content ${nocolor}"
- unzip /tmp/$component.zip &>>$log_file
  cd ${app_path}
+ unzip /tmp/$component.zip &>>$log_file
+ 
+ }
 
- echo -e "${color} Install NodeJS Dependencies ${nocolor}"
- npm install &>>$log_file
+ systemd_setup() {
 
  echo -e "${color} Setup systemd service  ${nocolor}"
  cp /root/roboshop-shell/$component.service /etc/systemd/system/$component.service &>>$log_file
@@ -37,6 +33,29 @@ nodejs () {
  systemctl daemon-reload &>>$log_file
  systemctl enable $component  &>>$log_file
  systemctl restart $component &>>$log_file
+
+}
+
+nodejs () { 
+
+ echo -e "${color} Configuring NodeJS Repos ${nocolor}"
+ curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>$log_file
+
+ echo -e "${color} Install NodeJS ${nocolor}"
+ yum install nodejs -y &>>$log_file
+
+
+ app_presetup
+
+ 
+
+ echo -e "${color} Install NodeJS Dependencies ${nocolor}"
+ npm install &>>$log_file
+
+
+ systemd_setup
+
+ 
 }
 
   mongo_schema_setup () {
@@ -51,4 +70,34 @@ yum install mongodb-org-shell -y &>>$log_file
 
 echo -e "${color} Load Schema ${nocolor}"
 mongo --host mongodb-dev.harshadevops.shop <${app_path}/schema/$component.js &>>$log_file
+}
+
+mysql_schema_setup() {
+
+
+echo -e "${color} Install Mysql Client ${nocolor}"
+yum install mysql -y &>>$log_file
+
+echo -e "${color} Load schema${nocolor}"
+mysql -h mysql-dev.harshadevops.shop -uroot -pRoboShop@1 < ${app_path}/schema/$component.sql &>>$log_file
+
+}
+
+maven ()
+{
+  echo -e "${color} Install Maven${nocolor}"
+yum install maven -y &>>$log_file
+
+app_presetup
+
+echo -e "${color} Download Dependencies${nocolor}"
+mvn clean package &>>$log_file
+mv target/$component-1.0.jar $component.jar &>>$log_file
+
+
+mysql_schema_setup
+
+
+
+systemd_setup 
 }
