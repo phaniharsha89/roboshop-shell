@@ -1,4 +1,4 @@
-source payment.sh
+source common.sh
 
 component=payment
 

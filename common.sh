@@ -6,7 +6,7 @@ app_path="/app"
 
 app_presetup () {
    
-   echo -e "${color} Add Application User ${nocolor}"
+ echo -e "${color} Add Application User ${nocolor}"
  useradd roboshop &>>$log_file
 
  echo -e "${color} Create Application Directory ${nocolor}"
