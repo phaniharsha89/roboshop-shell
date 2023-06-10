@@ -1,5 +1,5 @@
 color="\e[32m"
-nocolor="$\e[0m"
+nocolor="\e[0m"
 log_file="/tmp/roboshop.log"
 app_path="/app"  
 
@@ -115,12 +115,12 @@ mysql -h mysql-dev.harshadevops.shop -uroot -pRoboShop@1 < ${app_path}/schema/$c
 
 maven ()
 {
-  echo -e "${color} Install Maven${nocolor}"
+  echo -e "${color} Install Maven ${nocolor}"
 yum install maven -y &>>$log_file
 
 app_presetup
 
-echo -e "${color} Download Dependencies${nocolor}"
+echo -e "${color} Download Dependencies ${nocolor}"
 mvn clean package &>>$log_file
 mv target/$component-1.0.jar $component.jar &>>$log_file
 
