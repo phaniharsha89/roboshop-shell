@@ -135,8 +135,8 @@ systemd_setup
 python() {
 
 echo -e "${color} Install Python ${nocolor}"
-yum install python36 gcc python3-devel -y &>>$log_file
-if [ $? -eq 0]; then 
+yum install python36 gcc python3-devel -y &>>/tmp/roboshop.log
+if [$? -eq 0];  then 
   echo SUCCESS
  else
    echo FAILURE
@@ -149,7 +149,7 @@ app_presetup
 
 echo -e "${color} Download application Dependencies ${nocolor}"
 cd /app 
-pip3.6 install -r requirements.txt &>>$log_file
+pip3.6 install -r requirements.txt &>>/tmp/roboshop.log
 if [ $? -eq 0]; then 
   echo SUCCESS
  else
