@@ -1,6 +1,6 @@
 color="\e[32m"
 nocolor="${nocolor}"
-/tmp/roboshop.log="$log_file"
+log_file="/tmp/roboshop.log"
 app_path="/app"  
 
 
