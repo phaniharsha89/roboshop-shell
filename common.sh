@@ -6,38 +6,38 @@ app_path="/app"
 
 app_presetup () {
    
-  echo -e "${color} Add Application User ${nocolor}"
-  useradd roboshop &>>$log_file
-  if [ $? -eq 0]; then 
+echo -e "${color} Add Application User ${nocolor}"
+useradd roboshop &>>$log_file
+if [ $? -eq 0]; then 
     echo SUCCESS
-  else
+else
     echo FAILURE
-  fi   
+fi   
 
 
- echo -e "${color} Create Application Directory ${nocolor}"
- rm -rf ${app_path} &>>$log_file
- mkdir ${app_path} &>>$log_file
- if [ $? -eq 0]; then 
+echo -e "${color} Create Application Directory ${nocolor}"
+rm -rf ${app_path} &>>$log_file
+mkdir ${app_path} &>>$log_file
+if [ $? -eq 0]; then 
   echo SUCCESS
- else
+else
   echo FAILURE
- fi   
+fi   
 
- echo -e "${color}Download Application Content ${nocolor}"
- curl -o /tmp/$component.zip https://roboshop-artifacts.s3.amazonaws.com/$component.zip &>>$log_file
- if [ $? -eq 0]; then 
+echo -e "${color}Download Application Content ${nocolor}"
+curl -o /tmp/$component.zip https://roboshop-artifacts.s3.amazonaws.com/$component.zip &>>$log_file
+if [ $? -eq 0]; then 
   echo SUCCESS
- else
+else
   echo FAILURE
- fi   
+fi   
 
- echo -e "${color} Extract Application Content ${nocolor}"
- cd ${app_path}
- unzip /tmp/$component.zip &>>$log_file
- if [ $? -eq 0]; then 
+echo -e "${color} Extract Application Content ${nocolor}"
+cd ${app_path}
+unzip /tmp/$component.zip &>>$log_file
+if [ $? -eq 0]; then 
   echo SUCCESS
- else
+else
   echo FAILURE
 fi   
  
@@ -64,7 +64,7 @@ fi
   echo FAILURE  
  fi 
 
-}
+ }
 
 nodejs () { 
 
