@@ -8,18 +8,38 @@ app_presetup () {
    
  echo -e "${color} Add Application User ${nocolor}"
  useradd roboshop &>>$log_file
+ if [ $? -eq 0] ; then 
+  echo SUCCESS
+ else
+   echo FAILURE
+fi   
+
 
  echo -e "${color} Create Application Directory ${nocolor}"
  rm -rf ${app_path} &>>$log_file
  mkdir ${app_path} &>>$log_file
+ if [ $? -eq 0] ; then 
+  echo SUCCESS
+ else
+   echo FAILURE
+fi   
 
  echo -e "${color}Download Application Content ${nocolor}"
  curl -o /tmp/$component.zip https://roboshop-artifacts.s3.amazonaws.com/$component.zip &>>$log_file
- cd ${app_path} 
+ if [ $? -eq 0] ; then 
+  echo SUCCESS
+ else
+   echo FAILURE
+fi   
 
  echo -e "${color} Extract Application Content ${nocolor}"
  cd ${app_path}
  unzip /tmp/$component.zip &>>$log_file
+ if [ $? -eq 0] ; then 
+  echo SUCCESS
+ else
+   echo FAILURE
+fi   
  
  }
 
@@ -27,12 +47,22 @@ app_presetup () {
 
  echo -e "${color} Setup systemd service  ${nocolor}"
  cp /root/roboshop-shell/$component.service /etc/systemd/system/$component.service &>>$log_file
+ if [ $? -eq 0] ; then 
+  echo SUCCESS
+ else
+   echo FAILURE
+fi   
 
 
  echo -e "${color} Restart $component Service ${nocolor}"
  systemctl daemon-reload &>>$log_file
  systemctl enable $component  &>>$log_file
  systemctl restart $component &>>$log_file
+ if [ $? -eq 0] ; then 
+  echo SUCCESS
+ else
+   echo FAILURE
+fi   
 
 }
 
@@ -106,6 +136,13 @@ python() {
 
 echo -e "${color} Install Python ${nocolor}"
 yum install python36 gcc python3-devel -y &>>$log_file
+if [ $? -eq 0] ; then 
+  echo SUCCESS
+ else
+   echo FAILURE
+fi   
+
+
 
 app_presetup
 
