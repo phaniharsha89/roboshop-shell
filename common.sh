@@ -1,5 +1,5 @@
 color="\e[32m"
-nocolor="${nocolor}"
+nocolor="$\e[0m"
 log_file="/tmp/roboshop.log"
 app_path="/app"  
 
@@ -11,7 +11,7 @@ app_presetup () {
  if [ $? -eq 0]; then 
   echo SUCCESS
  else
-   echo FAILURE
+  echo FAILURE
 fi   
 
 
@@ -21,7 +21,7 @@ fi
  if [ $? -eq 0]; then 
   echo SUCCESS
  else
-   echo FAILURE
+  echo FAILURE
 fi   
 
  echo -e "${color}Download Application Content ${nocolor}"
@@ -29,7 +29,7 @@ fi
  if [ $? -eq 0]; then 
   echo SUCCESS
  else
-   echo FAILURE
+  echo FAILURE
 fi   
 
  echo -e "${color} Extract Application Content ${nocolor}"
@@ -38,7 +38,7 @@ fi
  if [ $? -eq 0]; then 
   echo SUCCESS
  else
-   echo FAILURE
+  echo FAILURE
 fi   
  
  }
@@ -50,7 +50,7 @@ fi
  if [ $? -eq 0]; then 
   echo SUCCESS
  else
-   echo FAILURE
+  echo FAILURE
 fi   
 
 
@@ -61,7 +61,7 @@ fi
  if [ $? -eq 0]; then 
   echo SUCCESS
  else
-   echo FAILURE
+  echo FAILURE
 fi   
 
 }
@@ -136,10 +136,10 @@ python() {
 
 echo -e "${color} Install Python ${nocolor}"
 yum install python36 gcc python3-devel -y &>>/tmp/roboshop.log
-if [$? -eq 0];  then 
+if [ $? -eq 0 ];  then 
   echo SUCCESS
  else
-   echo FAILURE
+  echo FAILURE
 fi   
 
 
@@ -153,7 +153,7 @@ pip3.6 install -r requirements.txt &>>/tmp/roboshop.log
 if [ $? -eq 0]; then 
   echo SUCCESS
  else
-   echo FAILURE
+  echo FAILURE
 fi   
 
 systemd_setup
