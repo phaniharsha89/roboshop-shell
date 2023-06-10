@@ -9,9 +9,9 @@ app_presetup () {
 echo -e "${color} Add Application User ${nocolor}"
 useradd roboshop &>>$log_file
 if [ $? -eq 0]; then 
-    echo SUCCESS
+  echo SUCCESS
 else
-    echo FAILURE
+  echo FAILURE
 fi   
 
 
