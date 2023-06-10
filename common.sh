@@ -6,13 +6,13 @@ app_path="/app"
 
 app_presetup () {
    
- echo -e "${color} Add Application User ${nocolor}"
- useradd roboshop &>>$log_file
- if [ $? -eq 0]; then 
-  echo SUCCESS
- else
-  echo FAILURE
-fi   
+  echo -e "${color} Add Application User ${nocolor}"
+  useradd roboshop &>>$log_file
+  if [ $? -eq 0]; then 
+    echo SUCCESS
+  else
+    echo FAILURE
+  fi   
 
 
  echo -e "${color} Create Application Directory ${nocolor}"
@@ -22,7 +22,7 @@ fi
   echo SUCCESS
  else
   echo FAILURE
-fi   
+ fi   
 
  echo -e "${color}Download Application Content ${nocolor}"
  curl -o /tmp/$component.zip https://roboshop-artifacts.s3.amazonaws.com/$component.zip &>>$log_file
@@ -30,7 +30,7 @@ fi
   echo SUCCESS
  else
   echo FAILURE
-fi   
+ fi   
 
  echo -e "${color} Extract Application Content ${nocolor}"
  cd ${app_path}
@@ -51,8 +51,8 @@ fi
   echo SUCCESS
  else
   echo FAILURE
-fi   
-
+ fi
+ 
 
  echo -e "${color} Restart $component Service ${nocolor}"
  systemctl daemon-reload &>>$log_file
@@ -61,8 +61,8 @@ fi
  if [ $? -eq 0]; then 
   echo SUCCESS
  else
-  echo FAILURE
-fi   
+  echo FAILURE  
+ fi 
 
 }
 
