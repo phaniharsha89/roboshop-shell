@@ -9,7 +9,7 @@ app_presetup () {
 echo -e "${color} Add Application User ${nocolor}"
 id roboshop &>>$log_file 
 if [$? -eq 1 ]; then 
-useradd roboshop &>>$log_file
+ useradd roboshop &>>$log_file
 fi
 if [ $? -eq 0 ]; then 
   echo SUCCESS
