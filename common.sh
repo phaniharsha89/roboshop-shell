@@ -52,22 +52,13 @@ stat_chek $?
  echo -e "${color} Setup systemd service  ${nocolor}"
  cp /root/roboshop-shell/$component.service /etc/systemd/system/$component.service &>>$log_file
  sed -i -e "s/roboshop_app_password/$roboshop_app_password/" /etc/systemd/system/$component.service 
- if [ $? -eq 0 ]; then 
-  echo SUCCESS
- else
-  echo FAILURE
- fi
- 
+ stat_chek $?
 
  echo -e "${color} Restart $component Service ${nocolor}"
  systemctl daemon-reload &>>$log_file
  systemctl enable $component  &>>$log_file
  systemctl restart $component &>>$log_file
- if [ $? -eq 0 ]; then 
-  echo SUCCESS
- else
-  echo FAILURE  
- fi 
+ stat_chek $?
 
  }
 
@@ -141,11 +132,7 @@ python() {
 
 echo -e "${color} Install Python ${nocolor}"
 yum install python36 gcc python3-devel -y &>>/tmp/roboshop.log
-if [ $? -eq 0 ];  then 
-  echo SUCCESS
- else
-  echo FAILURE
-fi   
+stat_chek $?
 
 
 
@@ -155,11 +142,7 @@ app_presetup
 echo -e "${color} Download application Dependencies ${nocolor}"
 cd /app 
 pip3.6 install -r requirements.txt &>>/tmp/roboshop.log
-if [ $? -eq 0 ]; then 
-  echo SUCCESS
- else
-  echo FAILURE
-fi   
+stat_chek $?
 
 systemd_setup
 
