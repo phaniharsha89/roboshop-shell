@@ -3,6 +3,16 @@ nocolor="\e[0m"
 log_file="/tmp/roboshop.log"
 app_path="/app"  
 
+stat_chek() {
+
+if [ $? -eq 0 ]; then 
+  echo SUCCESS
+else
+  echo FAILURE
+fi   
+
+}
+
 
 app_presetup () {
    
@@ -11,38 +21,23 @@ id roboshop &>>$log_file
 if [ $? -eq 1 ]; then 
  useradd roboshop &>>$log_file
 fi
-if [ $? -eq 0 ]; then 
-  echo SUCCESS
-else
-  echo FAILURE
-fi   
+stat_chek $?
+
 
 
 echo -e "${color} Create Application Directory ${nocolor}"
 rm -rf ${app_path} &>>$log_file
 mkdir ${app_path} &>>$log_file
-if [ $? -eq 0 ]; then 
-  echo SUCCESS
-else
-  echo FAILURE
-fi   
+stat_chek $?
 
 echo -e "${color}Download Application Content ${nocolor}"
 curl -o /tmp/$component.zip https://roboshop-artifacts.s3.amazonaws.com/$component.zip &>>$log_file
-if [ $? -eq 0 ]; then 
-  echo SUCCESS
-else
-  echo FAILURE
-fi   
+stat_chek $?
 
 echo -e "${color} Extract Application Content ${nocolor}"
 cd ${app_path}
 unzip /tmp/$component.zip &>>$log_file
-if [ $? -eq 0 ]; then 
-  echo SUCCESS
-else
-  echo FAILURE
-fi   
+stat_chek $?
  
  }
 
@@ -50,6 +45,7 @@ fi
 
  echo -e "${color} Setup systemd service  ${nocolor}"
  cp /root/roboshop-shell/$component.service /etc/systemd/system/$component.service &>>$log_file
+ sed -i -e "s/roboshop_app_password/$roboshop_app_password/" /etc/systemd/system/$component.service 
  if [ $? -eq 0 ]; then 
   echo SUCCESS
  else
